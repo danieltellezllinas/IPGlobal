@@ -1,17 +1,10 @@
-import { useEffect, useState } from "react";
+import { Dispatch, useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getMovieInfo } from "../config/api/api";
 
-interface MovieInfo {
-  id: number;
-  original_title: string;
-  poster_path: string;
-  overview: string;
-  original_language: string;
-  release_date: string;
-  vote_average: number;
-  vote_count: number;
-}
+import {AddVote} from '../components/AddVote'
+import { useDispatch } from "react-redux";
+import { addVote } from "../store/actionCreators";
 
 const Movie = () => {
   const { movie_id } = useParams();
@@ -22,7 +15,14 @@ const Movie = () => {
     const movieId = parseInt(movie_id ? movie_id : "");
     if (isNaN(movieId)) navigate("/");
     else getMovieInfo(movieId).then((response) => setMovieInfo(response.data));
-  }, []);
+  }, [movie_id]);
+
+  const dispatch: Dispatch<any> = useDispatch();
+
+  const saveVote = useCallback(
+    (vote: Vote) => dispatch(addVote(vote)),
+    [dispatch]
+  );
 
   return (
     <div className="movie__global_div">
@@ -56,6 +56,7 @@ const Movie = () => {
             <input className="movie__color252830" type="submit" value="Send" />
           </div>
         </form>
+        <AddVote saveVote={saveVote} movieId={movieInfo?.id} />
       </div>
     </div>
   );

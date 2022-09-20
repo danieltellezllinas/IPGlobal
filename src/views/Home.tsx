@@ -7,24 +7,9 @@ import {
 } from "react-router-dom";
 import { getPopularMovies, getSearchResults } from "../config/api/api";
 
-interface PopularMovies {
-  page: number;
-  results: Movie[];
-  total_pages: number;
-  total_results: number;
-}
-
-interface Movie {
-  id: number;
-  original_title: string;
-  overview: string;
-  poster_path: string;
-  release_date: string;
-}
-
 const Home = () => {
   const { page_id } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams({});
+  const [searchParams] = useSearchParams({});
   let navigate = useNavigate();
   const [movies, setMovies] = useState<null | PopularMovies>(null);
   const searchText = useRef<HTMLInputElement | null>(null);
