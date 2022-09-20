@@ -1,18 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { getPopularMovies, getSearchResults } from '../config/api/api';
+import { useEffect, useRef, useState } from "react";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import { getPopularMovies, getSearchResults } from "../config/api/api";
 
 interface PopularMovies {
-  page: number,
-  results: Movie[],
-  total_pages: number,
-  total_results: number,
+  page: number;
+  results: Movie[];
+  total_pages: number;
+  total_results: number;
 }
 
 interface Movie {
-  id: number,
-  original_title: string,
-  overview: string
+  id: number;
+  original_title: string;
+  overview: string;
+  poster_path: string;
 }
 
 const Home = () => {
@@ -25,34 +31,76 @@ const Home = () => {
   useEffect(() => {
     const pageId = page_id ? parseInt(page_id) : 1;
     const searchQuery = searchParams.get("query");
-    if(searchQuery)
-      getSearchResults(searchQuery, pageId).then(response => setMovies(response.data));
-    else
-      getPopularMovies(pageId).then(response => setMovies(response.data));
+    if (searchQuery)
+      getSearchResults(searchQuery, pageId).then((response) =>
+        setMovies(response.data)
+      );
+    else getPopularMovies(pageId).then((response) => setMovies(response.data));
   });
 
   const doSearch = () => {
-    if(movies)
-      movies.page = 1;
     const searchQuery = searchText?.current?.value;
-    if(searchQuery) setSearchParams({query: searchQuery});
-    else navigate('/');
-  }
+    if (searchQuery) {setSearchParams({ query: searchQuery });}
+    else navigate("/");
+  };
 
   return (
-    <div>
+    <div className="home__global_div">
       <h1>Películas populares</h1>
-      <h3>Buscar película <input type="text" ref={searchText} /> <button onClick={doSearch}>Buscar</button></h3>
-      <ul> 
-        {movies?.results.map(movie => <li key={movie.id}><Link to={"/movie/" + (movie.id)}>{movie.original_title}</Link></li>)}
-      </ul>
-      {movies && <div className="pagination">
-        {movies?.page > 1 && <Link to={"/" + (movies?.page - 1) + (searchParams.get("query") ? "?query=" + searchParams.get("query") : "")}>Anterior</Link>}
-        {movies?.page && movies.page}
-        {movies?.page < movies.total_pages && <Link to={"/" + (movies?.page + 1) + (searchParams.get("query") ? "?query=" + searchParams.get("query") : "")}>Siguiente</Link>}
-      </div>}
+      <h3>
+        Buscar película <input type="text" ref={searchText} />{" "}
+        <button onClick={doSearch}>Buscar</button>
+      </h3>
+      <section className="home__section_globalfilms">
+        {movies?.results.map((movie) => (
+          <div key={movie.id} className="home__div_film">
+            <Link to={"/movie/" + movie.id}>
+              <img
+                src={"https://image.tmdb.org/t/p/w342" + movie.poster_path}
+                alt="NoImage"
+              />
+            </Link>
+            {movie.original_title}
+          </div>
+        ))}
+      </section>
+      {movies && (
+        <div className="home__pagination">
+          {movies?.page > 1 && (
+            <Link
+              className="home__pagination_prev"
+              to={
+                "/" +
+                (movies?.page - 1) +
+                (searchParams.get("query")
+                  ? "?query=" + searchParams.get("query")
+                  : "")
+              }
+            >
+              {"<"} Prev
+            </Link>
+          )}
+          <div className="home__pagination_actualPage">
+            {movies?.page && movies.page}
+          </div>
+          {movies?.page < movies.total_pages && (
+            <Link
+              className="home__pagination_back"
+              to={
+                "/" +
+                (movies?.page + 1) +
+                (searchParams.get("query")
+                  ? "?query=" + searchParams.get("query")
+                  : "")
+              }
+            >
+              Next {">"}
+            </Link>
+          )}
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default Home;

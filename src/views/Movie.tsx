@@ -18,7 +18,11 @@ const Movie = () => {
         else getMovieInfo(movieId).then(response => setMovieInfo(response.data));
     });
 
-    return <h1>Película {movieInfo?.original_title};</h1>
+    return (
+    <>
+        <h1>Película {movieInfo?.original_title};</h1>
+    </>
+    );
 }
 
 export default Movie;

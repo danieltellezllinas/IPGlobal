@@ -1,0 +1,15 @@
+.navbar__global_div{
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-around;
+    :hover{
+        font-weight: 600;
+    }
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(to right, rgb(121, 121, 121), rgb(255, 255, 255)) 1;
+}

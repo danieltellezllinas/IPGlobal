@@ -3,9 +3,10 @@
 * {
     font-family: 'Urbanist', sans-serif;
     margin: 0px;
+    background-color: #050C16;
+    color: #c0c4d2;
 }
 
-html, body{
-    height: 100vh;
-    width: 100vw;
+#root {
+    margin-top: 80px;
 }
