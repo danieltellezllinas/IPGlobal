@@ -47,15 +47,6 @@ const Movie = () => {
           Vote average: {movieInfo?.vote_average}
         </p>
         <p className="movie__margin-bottom20px">Vote count: {movieInfo?.vote_count}</p>
-        <form className="movie__form_global_div">
-          <div className="movie__color252830">
-            <label className="movie__color252830">
-              Vote now:
-              <input type="number" placeholder="Write here " name="vote" id="vote" max={10} className='movie__input_votenow movie__color252830'/>
-            </label>
-            <input className="movie__color252830" type="submit" value="Send" />
-          </div>
-        </form>
         <AddVote saveVote={saveVote} movieId={movieInfo?.id} />
       </div>
     </div>

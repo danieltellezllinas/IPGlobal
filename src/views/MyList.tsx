@@ -6,20 +6,30 @@ const MyList = () => {
 
   useEffect(() => {
     const sessionId = localStorage.getItem("session_id");
-    if(sessionId) {
-      getRatedMovies(sessionId).then(response => setMovies(response.data));
+    if (sessionId) {
+      getRatedMovies(sessionId).then((response) => setMovies(response.data));
     }
   }, []);
 
   return (
     <main>
       <h1>My Votes</h1>
-      {movies?.results.map(movie => <div key={movie.id}>
-        <h1>{movie.original_title}</h1>
-        <p>My rating: {movie.rating}</p>
-      </div>)}
+      <div className="mylist__test">
+        {movies?.results.map((movie) => (
+          <div key={movie.id} className='mylist__global_div'>
+            <div>
+              <img
+                src={"https://image.tmdb.org/t/p/w342" + movie?.poster_path}
+                alt="NoImage"
+              />
+              <p>{movie.original_title}</p>
+              <p>My rating: {movie.rating}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </main>
-  )
-}
+  );
+};
 
-export default MyList
+export default MyList;

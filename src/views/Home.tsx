@@ -22,7 +22,7 @@ const Home = () => {
         setMovies(response.data)
       );
     else getPopularMovies(pageId).then((response) => setMovies(response.data));
-  }, []);
+  }, [searchParams, page_id]);
 
   const doSearch = () => {
     const searchQuery = searchText?.current?.value;
@@ -50,7 +50,11 @@ const Home = () => {
           <div key={movie.id} className="home__div_film">
             <Link to={"/movie/" + movie.id}>
               <img
-                src={movie.poster_path ? "https://image.tmdb.org/t/p/w342" + movie.poster_path : "https://image.tmdb.org/t/p/w342/8Neb8Kuej7R4LUJCGM6ljWt9qa1.jpg"}
+                src={
+                  movie.poster_path
+                    ? "https://image.tmdb.org/t/p/w342" + movie.poster_path
+                    : "https://image.tmdb.org/t/p/w342/8Neb8Kuej7R4LUJCGM6ljWt9qa1.jpg"
+                }
                 alt="NoImage"
               />
             </Link>
@@ -64,15 +68,15 @@ const Home = () => {
       {movies && (
         <div className="home__pagination">
           {movies?.page > 1 && (
-            <Link
-              className="home__pagination_back_prev"
-              to={
+            <Link to={
                 "/" +
                 (movies?.page - 1) +
                 (searchParams.get("query")
                   ? "?query=" + searchParams.get("query")
                   : "")
+                  
               }
+              className="home__pagination_back_prev"
             >
               {"<"} Prev
             </Link>
@@ -82,7 +86,6 @@ const Home = () => {
           </div>
           {movies?.page < movies.total_pages && (
             <Link
-              className="home__pagination_back_prev"
               to={
                 "/" +
                 (movies?.page + 1) +
@@ -90,6 +93,7 @@ const Home = () => {
                   ? "?query=" + searchParams.get("query")
                   : "")
               }
+              className="home__pagination_back_prev"
             >
               Next {">"}
             </Link>

@@ -16,7 +16,7 @@ export const AddVote = ({ saveVote, movieId }: Props) => {
     });
   };
   
-  const addNewVote = (e: React.FormEvent) => {
+  const addNewVote = async (e: React.FormEvent) => {
     e.preventDefault();
     if(vote !== undefined)
     sendVote(movieId, localStorage.getItem("session_id"), vote?.number);
@@ -24,8 +24,10 @@ export const AddVote = ({ saveVote, movieId }: Props) => {
   };
 
   return (
-    <form onSubmit={addNewVote} className="Add-vote">
+    <form onSubmit={addNewVote} className="addvote__form_global_div">
+      Vote now: 
       <input
+        className="addvote__color252830 addvote__input_votenow"
         type="number"
         id="number"
         placeholder="Write here"
@@ -33,7 +35,7 @@ export const AddVote = ({ saveVote, movieId }: Props) => {
         onChange={handleVoteData}
       />
       <button disabled={vote === undefined ? true : false}>
-        Send vote
+        Send
       </button>
     </form>
   );
