@@ -13,7 +13,7 @@ const MyList = () => {
 
   return (
     <main>
-      <h1>My Votes</h1>
+      <h1 className="mylist__title">My Votes</h1>
       <div className="mylist__test">
         {movies?.results.map((movie) => (
           <div key={movie.id} className='mylist__global_div'>
