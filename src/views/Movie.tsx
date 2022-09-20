@@ -22,7 +22,7 @@ const Movie = () => {
     const movieId = parseInt(movie_id ? movie_id : "");
     if (isNaN(movieId)) navigate("/");
     else getMovieInfo(movieId).then((response) => setMovieInfo(response.data));
-  });
+  }, []);
 
   return (
     <div className="movie__global_div">

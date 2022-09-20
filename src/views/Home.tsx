@@ -37,12 +37,12 @@ const Home = () => {
         setMovies(response.data)
       );
     else getPopularMovies(pageId).then((response) => setMovies(response.data));
-  });
+  }, []);
 
   const doSearch = () => {
     const searchQuery = searchText?.current?.value;
     if (searchQuery) {
-      setSearchParams({ query: searchQuery });
+      navigate("/?query=" + searchQuery);
     } else navigate("/");
   };
 
@@ -65,7 +65,7 @@ const Home = () => {
           <div key={movie.id} className="home__div_film">
             <Link to={"/movie/" + movie.id}>
               <img
-                src={"https://image.tmdb.org/t/p/w342" + movie.poster_path}
+                src={movie.poster_path ? "https://image.tmdb.org/t/p/w342" + movie.poster_path : "https://image.tmdb.org/t/p/w342/8Neb8Kuej7R4LUJCGM6ljWt9qa1.jpg"}
                 alt="NoImage"
               />
             </Link>
