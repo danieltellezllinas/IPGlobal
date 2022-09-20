@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { createSearchParams, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { getPopularMovies, getSearchResults } from '../config/api/api';
 
 interface PopularMovies {
@@ -29,7 +29,7 @@ const Home = () => {
       getSearchResults(searchQuery, pageId).then(response => setMovies(response.data));
     else
       getPopularMovies(pageId).then(response => setMovies(response.data));
-  }, [searchParams]);
+  });
 
   const doSearch = () => {
     const searchQuery = searchText?.current?.value;
@@ -38,11 +38,11 @@ const Home = () => {
   }
 
   return (
-    <div> 
+    <div>
       <h1>Películas populares</h1>
       <h3>Buscar película <input type="text" ref={searchText} /> <button onClick={doSearch}>Buscar</button></h3>
       <ul>
-        {movies?.results.map(movie => <li key={movie.id}><a href={"/movie/" + (movie.id)}>{movie.original_title}</a></li>)}
+        {movies?.results.map(movie => <li key={movie.id}><Link to={"/movie/" + (movie.id)}>{movie.original_title}</Link></li>)}
       </ul>
       {movies && <div className="pagination">
         {movies?.page > 1 && <a href={"/" + (movies?.page - 1) + (searchParams.get("query") ? "?query=" + searchParams.get("query") : "")}>Anterior</a>}
@@ -53,4 +53,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

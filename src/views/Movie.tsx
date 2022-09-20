@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { getMovieInfo } from "../config/api/api";
 
 interface MovieInfo {
@@ -16,11 +16,7 @@ const Movie = () => {
         const movieId = parseInt(movie_id ? movie_id : "");
         if(isNaN(movieId)) navigate('/');
         else getMovieInfo(movieId).then(response => setMovieInfo(response.data));
-    }, []);
-
-    const addValoration = () => {
-        
-    }
+    });
 
     return <h1>Película {movieInfo?.original_title};</h1>
 }
