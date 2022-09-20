@@ -1,0 +1,10 @@
+@import './base/base';
+@import './base/resets';
+
+//Views
+@import './views/home';
+@import './views/movie';
+@import './views/mylist';
+
+//Components
+@import './components/navbar';

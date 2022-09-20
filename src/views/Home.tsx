@@ -32,6 +32,8 @@ const Home = () => {
   });
 
   const doSearch = () => {
+    if(movies)
+      movies.page = 1;
     const searchQuery = searchText?.current?.value;
     if(searchQuery) setSearchParams({query: searchQuery});
     else navigate('/');
@@ -41,13 +43,13 @@ const Home = () => {
     <div>
       <h1>Películas populares</h1>
       <h3>Buscar película <input type="text" ref={searchText} /> <button onClick={doSearch}>Buscar</button></h3>
-      <ul>
+      <ul> 
         {movies?.results.map(movie => <li key={movie.id}><Link to={"/movie/" + (movie.id)}>{movie.original_title}</Link></li>)}
       </ul>
       {movies && <div className="pagination">
-        {movies?.page > 1 && <a href={"/" + (movies?.page - 1) + (searchParams.get("query") ? "?query=" + searchParams.get("query") : "")}>Anterior</a>}
+        {movies?.page > 1 && <Link to={"/" + (movies?.page - 1) + (searchParams.get("query") ? "?query=" + searchParams.get("query") : "")}>Anterior</Link>}
         {movies?.page && movies.page}
-        {movies?.page < movies.total_pages && <a href={"/" + (movies?.page + 1) + (searchParams.get("query") ? "?query=" + searchParams.get("query") : "")}>Siguiente</a>}
+        {movies?.page < movies.total_pages && <Link to={"/" + (movies?.page + 1) + (searchParams.get("query") ? "?query=" + searchParams.get("query") : "")}>Siguiente</Link>}
       </div>}
     </div>
   )
