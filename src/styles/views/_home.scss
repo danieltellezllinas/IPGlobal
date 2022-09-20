@@ -15,6 +15,12 @@
   margin: 20px;
 }
 
+.home__titleanddatefilm {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+}
+
 //Next and back
 
 .home__pagination {
@@ -24,14 +30,7 @@
   align-items: center;
 }
 
-.home__pagination_prev {
-  background-color: #444857;
-  padding: 12px 16px 12px 16px;
-  border-radius: 2px;
-  color: white;
-}
-
-.home__pagination_back {
+.home__pagination_back_prev {
   background-color: #444857;
   padding: 12px 16px 12px 16px;
   border-radius: 2px;
@@ -49,4 +48,24 @@
   color: white;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+//Search
+
+.home__search_global_div{
+    margin-top: 20px;
+    width: fit-content;
+    background-color: #252830;
+    padding: 20px;
+}
+
+.home__search_input{
+    border: none;
+    background-color: #252830;
+    font-size: 16px;
+    outline: none;
+}
+
+.home__search_button{
+    font-size: 16px;
 }

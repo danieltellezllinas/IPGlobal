@@ -19,6 +19,7 @@ interface Movie {
   original_title: string;
   overview: string;
   poster_path: string;
+  release_date: string;
 }
 
 const Home = () => {
@@ -40,17 +41,25 @@ const Home = () => {
 
   const doSearch = () => {
     const searchQuery = searchText?.current?.value;
-    if (searchQuery) {setSearchParams({ query: searchQuery });}
-    else navigate("/");
+    if (searchQuery) {
+      setSearchParams({ query: searchQuery });
+    } else navigate("/");
   };
 
   return (
     <div className="home__global_div">
-      <h1>Películas populares</h1>
-      <h3>
-        Buscar película <input type="text" ref={searchText} />{" "}
-        <button onClick={doSearch}>Buscar</button>
-      </h3>
+      <h1>Popular movies</h1>
+      <div className="home__search_global_div">
+        <input
+          className="home__search_input"
+          placeholder="Search Movies..."
+          type="text"
+          ref={searchText}
+        />{" "}
+        <button className="home__search_button" onClick={doSearch}>
+          Search
+        </button>
+      </div>
       <section className="home__section_globalfilms">
         {movies?.results.map((movie) => (
           <div key={movie.id} className="home__div_film">
@@ -60,7 +69,10 @@ const Home = () => {
                 alt="NoImage"
               />
             </Link>
-            {movie.original_title}
+            <div className="home__titleanddatefilm">
+              <p>{movie.original_title}</p>
+              <p>{movie.release_date}</p>
+            </div>
           </div>
         ))}
       </section>
@@ -68,7 +80,7 @@ const Home = () => {
         <div className="home__pagination">
           {movies?.page > 1 && (
             <Link
-              className="home__pagination_prev"
+              className="home__pagination_back_prev"
               to={
                 "/" +
                 (movies?.page - 1) +
@@ -85,7 +97,7 @@ const Home = () => {
           </div>
           {movies?.page < movies.total_pages && (
             <Link
-              className="home__pagination_back"
+              className="home__pagination_back_prev"
               to={
                 "/" +
                 (movies?.page + 1) +
