@@ -1,18 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Link,
-  useNavigate,
   useParams,
   useSearchParams,
 } from "react-router-dom";
+import Search from "../components/Search";
 import { getPopularMovies, getSearchResults } from "../config/api/api";
 
 const Home = () => {
   const { page_id } = useParams();
   const [searchParams] = useSearchParams({});
-  let navigate = useNavigate();
   const [movies, setMovies] = useState<null | PopularMovies>(null);
-  const searchText = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const pageId = page_id ? parseInt(page_id) : 1;
@@ -24,27 +22,10 @@ const Home = () => {
     else getPopularMovies(pageId).then((response) => setMovies(response.data));
   }, [searchParams, page_id]);
 
-  const doSearch = () => {
-    const searchQuery = searchText?.current?.value;
-    if (searchQuery) {
-      navigate("/?query=" + searchQuery);
-    } else navigate("/");
-  };
-
   return (
     <div className="home__global_div">
       <h1>Popular movies</h1>
-      <div className="home__search_global_div">
-        <input
-          className="home__search_input"
-          placeholder="Search Movies..."
-          type="text"
-          ref={searchText}
-        />{" "}
-        <button className="home__search_button" onClick={doSearch}>
-          Search
-        </button>
-      </div>
+      <Search />
       <section className="home__section_globalfilms">
         {movies?.results.map((movie) => (
           <div key={movie.id} className="home__div_film">
@@ -68,13 +49,13 @@ const Home = () => {
       {movies && (
         <div className="home__pagination">
           {movies?.page > 1 && (
-            <Link to={
+            <Link
+              to={
                 "/" +
                 (movies?.page - 1) +
                 (searchParams.get("query")
                   ? "?query=" + searchParams.get("query")
                   : "")
-                  
               }
               className="home__pagination_back_prev"
             >
